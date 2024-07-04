@@ -1,11 +1,37 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
+  "compilerOptions": {
+    "target": "esnext", // Compile to latest ECMAScript version
+    "module": "esnext", // Use latest module standards
+    "moduleResolution": "node", // Use Node.js module resolution mechanism
+    "lib": [
+      "dom",
+      "esnext"
+    ], // Include type definitions for DOM and latest ECMAScript features
+    "jsx": "preserve", // Preserve JSX to be handled by another transformer, e.g., babel or vue
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Allows default imports from modules with no default export
+    "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export
+    "experimentalDecorators": true, // Enable experimental support for decorators
+    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file.
+    "baseUrl": ".", // Base directory to resolve non-absolute module names
+    "paths": { // Map '@' to the src directory
+      "@/*": [
+        "src/*"
+      ]
     },
-    {
-      "path": "./tsconfig.app.json"
-    }
+    "strictPropertyInitialization": false, // Disable strict checking of property initialization in classes
+    "noImplicitReturns": true, // Report error when not all code paths in function return a value
+    "noImplicitThis": true, // Raise error on 'this' expressions with an implied 'any' type
+    "noImplicitAny": true, // Raise error on expressions and declarations with an implied 'any' type
+    "importsNotUsedAsValues": "remove" // Omit imports that are only used for type annotations
+  },
+  "include": [
+    "src/**/*.ts", // Include all TypeScript files in src
+    "src/**/*.d.ts", // Include TypeScript definition files
+    "src/**/*.vue" // Include Vue files
+  ],
+  "exclude": [
+    "node_modules", // Exclude the node_modules directory
+    "**/*.spec.ts" // Exclude test files
   ]
 }

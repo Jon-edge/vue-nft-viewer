@@ -1,85 +1,91 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div style="color: #fff; padding: 20px; background-color: #121212">
+    <h1
+      style="
+        text-align: center;
+        margin: 20px 0;
+        font-size: 2rem;
+        text-shadow: 2px 2px 2px rgba(131, 131, 131, 0.932);
+      "
+    >
+      Stargaze NFT Display
+    </h1>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        align-items: center;
+      "
+    >
+      <div style="font-size: 1.25rem; margin-right: 5px">Address:</div>
+      <input
+        type="text"
+        placeholder="Enter wallet address"
+        v-model="ownerAddress"
+        style="
+          padding: 10px;
+          font-size: 16px;
+          border-radius: 5px;
+          border: 2px solid #ccc;
+          width: 380px;
+          color: #333;
+          background-color: #fff;
+        "
+      />
+      <div style="font-size: 1.25rem; margin-right: 5px">Num NFTs:</div>
+      <input
+        type="number"
+        placeholder="50"
+        v-model.number="numNfts"
+        style="
+          padding: 10px;
+          font-size: 16px;
+          border-radius: 5px;
+          border: 2px solid #ccc;
+          width: 50px;
+          color: #333;
+          background-color: #fff;
+        "
+      />
+      <button
+        @click="onFetchButtonClick"
+        style="
+          padding: 10px 20px;
+          font-size: 16px;
+          border-radius: 5px;
+          border: none;
+          background-color: #4a5568;
+          color: #fff;
+          cursor: pointer;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          margin-left: 10px;
+        "
+      >
+        Fetch NFTs
+      </button>
     </div>
-  </header>
-
-  <RouterView />
+    <div v-if="loading">Loading...</div>
+    <div v-else-if="error" style="color: red; text-align: center">
+      {{ error }}
+    </div>
+    <NFTList :ownerAddress="ownerAddress" :numNfts="numNfts" />
+  </div>
 </template>
 
+<script setup>
+import { ref } from 'vue'
+import NFTList from './components/NFTList.vue' // Adjust path as necessary
+import { fetchNFTs } from './utils/fetchNFTs' // Adjust path as necessary
+
+const ownerAddress = ref('stars1a605a9879cafvsql5l3r734kl6flak866gfppe')
+const numNfts = ref(50)
+const nfts = ref([])
+const loading = ref(false)
+const error = ref(null)
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
+/* Add any additional styles here */
 </style>
